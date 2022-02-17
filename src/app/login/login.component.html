@@ -1,0 +1,45 @@
+<p>login works!</p>
+
+<form [formGroup]= "addLoginForm">
+<table>
+    <div class="form-group">
+        <label>Name</label>
+        <input type="text" formControlName="firstName" placeholder="name" (keyup)="trackName()"><br>
+        <span  class="text-danger"    *ngIf="addLoginForm.get('firstName')?.hasError('required') && addLoginForm.get('firstName')?.touched">name is required</span>
+        <span  class="text-danger"    *ngIf="addLoginForm.get('firstName')?.hasError('minlength') && addLoginForm.get('firstName')?.touched">enter atleast five characters</span>
+        <span  class="text-danger"    *ngIf="addLoginForm.get('firstName')?.hasError('maxlength') && addLoginForm.get('firstName')?.touched">name should have maximum of 15 characters</span><br>
+    <br></div>
+
+    <div class="form-group">
+        <label>email</label>
+    <input type="email" formControlName="email" placeholder="email"><br><br>
+    </div>
+
+    <div class="form-group">
+        <label>Description</label>
+        <textarea formControlName="description" placeholder="Description"></textarea><br><br>
+     </div>   
+
+   <!-- <div class="form-group" formArrayName="users">
+<label>users</label>
+<div *ngFor="let control of addLoginForm.controls.users['controls']; let i=index"></div>
+<input type="text" [formControlName]="i">
+
+   </div> -->
+<tr>
+    <div class="form-group" formArrayName="users">
+        <label>Users</label>
+        <div *ngFor="let control of addLoginForm.controls.users['controls']; let i=index;" [formGroupName]="i">
+            <input type="text" formControlName="name">
+            <input type="text" formControlName="age">
+            <input type="text" formControlName="dept">
+        </div>
+    </div>
+</tr>
+
+
+  </table> 
+<button (click)="add()" [disabled]="!addLoginForm.valid">Add</button>
+<button (click)="resetForm()">Reset</button>
+
+</form>
